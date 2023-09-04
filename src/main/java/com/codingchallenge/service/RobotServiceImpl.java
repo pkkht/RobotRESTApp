@@ -5,6 +5,8 @@ import com.codingchallenge.repository.RobotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class RobotServiceImpl implements IRobotService{
 
@@ -22,5 +24,10 @@ public class RobotServiceImpl implements IRobotService{
             return newRobot;
         }
         return robot;
+    }
+
+    @Override
+    public Optional<Robot> findRobotById(Long id) {
+        return robotRepository.findById(id);
     }
 }
