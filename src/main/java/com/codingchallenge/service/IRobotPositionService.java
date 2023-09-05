@@ -11,7 +11,7 @@ public interface IRobotPositionService {
 
       Optional<RobotPosition> findRobotPositionById(Long id);
 
-      RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands);
+      RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception;
 
       void deleteRobotPositionById(Long id);
 }

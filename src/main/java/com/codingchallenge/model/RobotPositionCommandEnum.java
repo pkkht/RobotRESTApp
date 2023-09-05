@@ -27,6 +27,7 @@ public enum RobotPositionCommandEnum {
         return this.command;
     }
 
+
     public static Stream<String> streamRobotCommands() {
         return Stream.of(RobotPositionCommandEnum.MOVE_ONE_UNIT.getCommand(), RobotPositionCommandEnum.TURN_LEFT.getCommand(), RobotPositionCommandEnum.TURN_RIGHT.getCommand());
     }

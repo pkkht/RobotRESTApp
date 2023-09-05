@@ -4,7 +4,6 @@ import com.codingchallenge.helper.RobotCommandsHelper;
 import com.codingchallenge.model.RobotPosition;
 import com.codingchallenge.model.RobotPositionCommands;
 import com.codingchallenge.repository.RobotPositionRepository;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +41,8 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
      * @param robotPositionCommands
      * @return
      */
-    @SneakyThrows
     @Override
-    public RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) {
+    public RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception {
 
         if (robotPositionRepository.existsById(robotPositionCommands.getRobotPositionId())){
             Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPositionCommands.getRobotPositionId());
