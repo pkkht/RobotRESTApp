@@ -21,10 +21,36 @@ public class RobotCommandsHelper {
         for (String command: commands){
             switch(command){
                 case "MOVE" -> handleMove(currentRobotPosition);
+                case "LEFT" -> handleLeftTurn(currentRobotPosition);
+                case "RIGHT" -> handleRightTurn(currentRobotPosition);
             }
         }
 
         return currentRobotPosition;
+    }
+
+    private void handleRightTurn(RobotPosition currentRobotPosition) {
+        if (currentRobotPosition.getFacingdir().equals(RobotPositionEnum.WEST.getDirection())){
+            currentRobotPosition.setFacingdir(RobotPositionEnum.NORTH.getDirection());
+        } else if (currentRobotPosition.getFacingdir().equals(RobotPositionEnum.EAST.getDirection())){
+            currentRobotPosition.setFacingdir(RobotPositionEnum.SOUTH.getDirection());
+        } else if (currentRobotPosition.getFacingdir().equals(RobotPositionEnum.NORTH.getDirection())){
+            currentRobotPosition.setFacingdir(RobotPositionEnum.EAST.getDirection());
+        } else if (currentRobotPosition.getFacingdir().equals(RobotPositionEnum.SOUTH.getDirection())){
+            currentRobotPosition.setFacingdir(RobotPositionEnum.WEST.getDirection());
+        }
+    }
+
+    private void handleLeftTurn(RobotPosition currentRobotPosition) {
+        if (currentRobotPosition.getFacingdir().equals(RobotPositionEnum.WEST.getDirection())){
+            currentRobotPosition.setFacingdir(RobotPositionEnum.SOUTH.getDirection());
+        } else if (currentRobotPosition.getFacingdir().equals(RobotPositionEnum.EAST.getDirection())){
+            currentRobotPosition.setFacingdir(RobotPositionEnum.NORTH.getDirection());
+        } else if (currentRobotPosition.getFacingdir().equals(RobotPositionEnum.NORTH.getDirection())){
+            currentRobotPosition.setFacingdir(RobotPositionEnum.WEST.getDirection());
+        } else if (currentRobotPosition.getFacingdir().equals(RobotPositionEnum.SOUTH.getDirection())){
+            currentRobotPosition.setFacingdir(RobotPositionEnum.EAST.getDirection());
+        }
     }
 
     private void handleMove(RobotPosition currentRobotPosition) throws Exception {
