@@ -1,6 +1,6 @@
 package com.codingchallenge.validation;
 
-import com.codingchallenge.model.RobotSpecEnum;
+import com.codingchallenge.model.RobotPositionEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -16,7 +16,7 @@ public class ValidatorForYPos implements ConstraintValidator<ValidYPos, Integer>
      */
     @Override
     public boolean isValid(Integer yValue, ConstraintValidatorContext constraintValidatorContext) {
-        final ValueRange range = ValueRange.of(RobotSpecEnum.MIN_Y.getValue(), RobotSpecEnum.MAX_Y.getValue());
+        final ValueRange range = ValueRange.of(RobotPositionEnum.MIN_Y.getValue(), RobotPositionEnum.MAX_Y.getValue());
         return range.isValidValue(yValue);
     }
 }

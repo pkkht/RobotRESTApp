@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public enum RobotSpecEnum {
+public enum RobotPositionEnum {
 
     MAX_X(4),
     MIN_X(0),
@@ -21,13 +21,13 @@ public enum RobotSpecEnum {
 
     private static Map map = new HashMap<>();
     static {
-        for (RobotSpecEnum robotSpec : RobotSpecEnum.values()) {
-            map.put(robotSpec, robotSpec.value);
+        for (RobotPositionEnum robotPosition : RobotPositionEnum.values()) {
+            map.put(robotPosition, robotPosition.value);
         }
     }
 
     private String direction;
-    RobotSpecEnum(String n) {
+    RobotPositionEnum(String n) {
         this.direction = n;
     }
     public String getDirection(){
@@ -35,7 +35,7 @@ public enum RobotSpecEnum {
     }
 
     private int value;
-    RobotSpecEnum(int i) {
+    RobotPositionEnum(int i) {
         this.value = i;
     }
 
@@ -43,12 +43,8 @@ public enum RobotSpecEnum {
         return this.value;
     }
 
-    public static RobotSpecEnum valueOf(int robotSpec) {
-        return (RobotSpecEnum) map.get(robotSpec);
-    }
-
-    public static Stream<RobotSpecEnum> streamDirection() {
-        return Stream.of(RobotSpecEnum.NORTH, RobotSpecEnum.SOUTH, RobotSpecEnum.EAST, RobotSpecEnum.WEST);
+    public static Stream<RobotPositionEnum> streamRobotPositionDirections() {
+        return Stream.of(RobotPositionEnum.NORTH, RobotPositionEnum.SOUTH, RobotPositionEnum.EAST, RobotPositionEnum.WEST);
     }
 
 }

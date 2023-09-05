@@ -1,6 +1,5 @@
 package com.codingchallenge.model;
 
-
 import com.codingchallenge.validation.ValidFacingDirection;
 import com.codingchallenge.validation.ValidXPos;
 import com.codingchallenge.validation.ValidYPos;
@@ -8,9 +7,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "robot")
+@Table(name = "robot_position")
 @Data
-public class Robot {
+public class RobotPosition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,4 +26,5 @@ public class Robot {
     @Column(name="facingdir", nullable = false)
     @ValidFacingDirection
     private String facingdir;
+
 }
