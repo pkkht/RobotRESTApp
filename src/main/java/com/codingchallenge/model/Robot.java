@@ -1,6 +1,8 @@
 package com.codingchallenge.model;
 
 
+import com.codingchallenge.validation.ValidXPos;
+import com.codingchallenge.validation.ValidYPos;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,10 +16,12 @@ public class Robot {
     private long id;
 
     @Column(name="Xpos", nullable = false)
-    private int Xpos;
+    @ValidXPos
+    private int xpos;
 
     @Column(name="Ypos", nullable = false)
-    private int Ypos;
+    @ValidYPos
+    private int ypos;
 
     @Column(name="facingdir", nullable = false)
     private String facingdir;

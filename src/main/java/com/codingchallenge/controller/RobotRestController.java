@@ -6,8 +6,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,16 +22,16 @@ public class RobotRestController {
     IRobotService robotService;
 
     @PostMapping("/createRobot")
-    public ResponseEntity<Robot> addTask(@Valid @RequestBody Robot robot) {
+    public ResponseEntity<Object> addRobot(@Valid @RequestBody Robot robot) {
         try {
             Robot newRobot = robotService.createRobot(robot);
             if (newRobot.getId() > 0)
                 return new ResponseEntity<>(newRobot, HttpStatus.CREATED);
             else {
-                return new ResponseEntity<>(newRobot, HttpStatus.EXPECTATION_FAILED);
+                return new ResponseEntity<>(robot, HttpStatus.EXPECTATION_FAILED);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(robot, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -35,8 +39,8 @@ public class RobotRestController {
     /*Request Type: GET */
     /*URL Pattern: /id */
     /*When robot is found for the given id, return the task. Otherwise, 404 */
-    @GetMapping("/{id}")
-    public ResponseEntity<Robot> getTask(@PathVariable Long id) {
+    @GetMapping("/report/{id}")
+    public ResponseEntity<Robot> getRobot(@PathVariable Long id) {
         Optional<Robot> robot= robotService.findRobotById(id);
 
         if (!robot.isPresent()) {
@@ -44,5 +48,17 @@ public class RobotRestController {
         } else {
             return ResponseEntity.ok(robot.get());
         }
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException e) {
+        Map<String, String> errors = new HashMap<>();
+        e.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 }
