@@ -8,5 +8,7 @@ public interface IRobotService {
 
       Robot createRobot(Robot robot) ;
 
-       Optional<Robot> findRobotById(Long id);
+      Optional<Robot> findRobotById(Long id);
+
+      void deleteRobotById(Long id);
 }

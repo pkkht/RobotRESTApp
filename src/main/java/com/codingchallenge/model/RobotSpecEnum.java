@@ -2,6 +2,7 @@ package com.codingchallenge.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public enum RobotSpecEnum {
 
@@ -46,5 +47,8 @@ public enum RobotSpecEnum {
         return (RobotSpecEnum) map.get(robotSpec);
     }
 
+    public static Stream<RobotSpecEnum> streamDirection() {
+        return Stream.of(RobotSpecEnum.NORTH, RobotSpecEnum.SOUTH, RobotSpecEnum.EAST, RobotSpecEnum.WEST);
+    }
 
 }

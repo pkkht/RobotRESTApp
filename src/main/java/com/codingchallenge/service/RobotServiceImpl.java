@@ -30,4 +30,9 @@ public class RobotServiceImpl implements IRobotService{
     public Optional<Robot> findRobotById(Long id) {
         return robotRepository.findById(id);
     }
+
+    @Override
+    public void deleteRobotById(Long id) {
+        robotRepository.deleteById(id);
+    }
 }

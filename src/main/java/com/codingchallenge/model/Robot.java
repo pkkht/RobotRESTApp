@@ -1,6 +1,7 @@
 package com.codingchallenge.model;
 
 
+import com.codingchallenge.validation.ValidFacingDirection;
 import com.codingchallenge.validation.ValidXPos;
 import com.codingchallenge.validation.ValidYPos;
 import jakarta.persistence.*;
@@ -24,5 +25,6 @@ public class Robot {
     private int ypos;
 
     @Column(name="facingdir", nullable = false)
+    @ValidFacingDirection
     private String facingdir;
 }

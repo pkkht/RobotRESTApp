@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ValidXPos{
 
-    String message() default "Invalid X Position - Must be between 0 and 4";
+    String message() default "Invalid X Position of the robot - Must be between 0 and 4";
 
     Class<?>[] groups() default { };
 

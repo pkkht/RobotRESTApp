@@ -50,6 +50,25 @@ public class RobotRestController {
         }
     }
 
+    /*API for deleting a robot*/
+    /*Request Type: DELETE */
+    /*URL Pattern: /id */
+    /*When a task is found in the database, delete the robot and send OK response. If not found, 404 response. Or else, 417 for any other error */
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteRobot(@PathVariable Long id) {
+
+        try {
+            if (!robotService.findRobotById(id).isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+            robotService.deleteRobotById(id);
+            return new ResponseEntity<>(id, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(id, HttpStatus.EXPECTATION_FAILED);
+        }
+
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException e) {

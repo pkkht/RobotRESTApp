@@ -11,14 +11,14 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ValidatorForYPos.class)
+@Constraint(validatedBy = ValidatorForFacingDirection.class)
 @Documented
-public @interface ValidYPos{
+public @interface ValidFacingDirection {
 
-    String message() default "Invalid Y Position of the robot - Must be between 0 and 4";
+    String message() default "Invalid Facing Direction of the robot - must be one of values N, S, E, W - " +
+            "representing North, South, East and West respectively";
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
-
 }

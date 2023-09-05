@@ -3,8 +3,6 @@ package com.codingchallenge.validation;
 import com.codingchallenge.model.RobotSpecEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.hibernate.validator.internal.constraintvalidators.bv.AssertTrueValidator;
-import org.springframework.util.Assert;
 
 import java.time.temporal.ValueRange;
 
