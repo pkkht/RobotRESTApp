@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  * Provides default CRUD methods
  */
 @Repository
-public interface RobotPositionRepository extends JpaRepository<RobotPosition, Long> {
+public interface RobotPositionRepository extends JpaRepository<RobotPosition, Integer> {
 
 }

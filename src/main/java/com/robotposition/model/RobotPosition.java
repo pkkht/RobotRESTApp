@@ -4,6 +4,7 @@ import com.robotposition.validation.ValidFacingDirection;
 import com.robotposition.validation.ValidXPos;
 import com.robotposition.validation.ValidYPos;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
@@ -14,7 +15,7 @@ public class RobotPosition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long robotPositionId;
+    private int robotPositionId;
 
     @Column(name="Xpos", nullable = false)
     @ValidXPos

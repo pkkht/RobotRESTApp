@@ -8,7 +8,7 @@ import lombok.Data;
 public class RobotPositionCommands {
 
     @Valid
-    private Long robotPositionId;
+    private Integer robotPositionId;
 
     @ValidCommand
     private String robotPositionCommands;

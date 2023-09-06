@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/robotposition")
+@RequestMapping("/api/robotposition")
 public class RobotPositionRestController {
 
     @Autowired
@@ -26,16 +26,12 @@ public class RobotPositionRestController {
 
     @PostMapping("/createRobotPosition")
     public ResponseEntity<Object> createRobotPosition(@Valid @RequestBody @NotNull RobotPosition robotPosition)  {
-            RobotPosition newRobotPosition = robotPositionService.createRobotPosition(robotPosition);
-            return new ResponseEntity<>(newRobotPosition, HttpStatus.CREATED);
+        RobotPosition newRobotPosition = robotPositionService.createRobotPosition(robotPosition);
+        return new ResponseEntity<>(newRobotPosition, HttpStatus.CREATED);
     }
 
-    /*API for fetching a robot position by its unique ID*/
-    /*Request Type: GET */
-    /*URL Pattern: /id */
-    /*When robot position is found for the given id, return the robot position. Otherwise, 404 */
-    @GetMapping("/report/{id}")
-    public ResponseEntity<RobotPosition> getRobotPosition(@PathVariable @NotNull Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<RobotPosition> getRobotPosition(@PathVariable @NotNull Integer id) {
         Optional<RobotPosition> robotPosition= robotPositionService.findRobotPositionById(id);
 
         if (!robotPosition.isPresent()) {
@@ -45,39 +41,6 @@ public class RobotPositionRestController {
         }
     }
 
-    @PutMapping("/updateRobotPosition")
-    public ResponseEntity<Object> updateRobotPosition(@Valid @RequestBody @NotNull RobotPositionCommands robotPositionCommands) throws Exception{
-            if (!robotPositionService.findRobotPositionById(robotPositionCommands.getRobotPositionId()).isPresent()) {
-                return ResponseEntity.notFound().build();
-            }
-            RobotPosition updatedRobotPosition = robotPositionService.updateRobotPosition(robotPositionCommands);
-            return new ResponseEntity<>(updatedRobotPosition, HttpStatus.OK);
-    }
-
-    /*API for deleting a robot position*/
-    /*Request Type: DELETE */
-    /*URL Pattern: /id */
-    /*When a robot position is found in the database, delete the robot position
-    and send OK response. If not found, 404 response. Or else, 417 for any other error */
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteRobotPosition(@PathVariable @NotNull Long id) {
-
-        try {
-            if (!robotPositionService.findRobotPositionById(id).isPresent()) {
-                return ResponseEntity.notFound().build();
-            }
-            robotPositionService.deleteRobotPositionById(id);
-            return new ResponseEntity<>(id, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(id, HttpStatus.EXPECTATION_FAILED);
-        }
-
-    }
-
-    /*API for fetching all the Robot positions*/
-    /*Request Type: GET */
-    /*URL Pattern: /report */
-    /*When records are found, returns the list of all robot positions. Otherwise, 404 */
     @GetMapping("/report")
     public ResponseEntity<List<RobotPosition>> getAllRobotPositions() {
         List<RobotPosition> robotPositions= robotPositionService.findAllRobotPositions();
@@ -87,6 +50,24 @@ public class RobotPositionRestController {
         } else {
             return ResponseEntity.ok(robotPositions);
         }
+    }
+
+    @PutMapping("/updateRobotPosition")
+    public ResponseEntity<Object> updateRobotPosition(@Valid @RequestBody @NotNull RobotPositionCommands robotPositionCommands) throws Exception{
+        if (!robotPositionService.findRobotPositionById(robotPositionCommands.getRobotPositionId()).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        RobotPosition updatedRobotPosition = robotPositionService.updateRobotPosition(robotPositionCommands);
+        return new ResponseEntity<>(updatedRobotPosition, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteRobotPosition(@PathVariable @NotNull Integer id) {
+        if (!robotPositionService.findRobotPositionById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        robotPositionService.deleteRobotPositionById(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

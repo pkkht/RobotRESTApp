@@ -35,7 +35,7 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     }
 
     @Override
-    public Optional<RobotPosition> findRobotPositionById(Long id) {
+    public Optional<RobotPosition> findRobotPositionById(Integer id) {
         return robotPositionRepository.findById(id);
     }
 
@@ -59,7 +59,7 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     }
 
     @Override
-    public void deleteRobotPositionById(Long id) {
+    public void deleteRobotPositionById(Integer id) {
         robotPositionRepository.deleteById(id);
     }
 

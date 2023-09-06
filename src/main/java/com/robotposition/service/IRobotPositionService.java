@@ -10,11 +10,11 @@ public interface IRobotPositionService {
 
       RobotPosition createRobotPosition(RobotPosition robotPosition);
 
-      Optional<RobotPosition> findRobotPositionById(Long id);
+      Optional<RobotPosition> findRobotPositionById(Integer id);
 
       RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception;
 
-      void deleteRobotPositionById(Long id);
+      void deleteRobotPositionById(Integer id);
 
       List<RobotPosition> findAllRobotPositions();
 }

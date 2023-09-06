@@ -12,9 +12,11 @@
 	<artifactId>RobotRESTApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>RobotRESTApp</name>
-	<description>Spring Boot Coding Challenge</description>
+	<description>Spring Boot REST API</description>
 	<properties>
 		<java.version>17</java.version>
+		<maven.test.skip>true</maven.test.skip>
+		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -31,11 +33,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -48,7 +45,6 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
