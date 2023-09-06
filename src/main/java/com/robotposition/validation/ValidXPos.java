@@ -1,4 +1,4 @@
-package com.codingchallenge.validation;
+package com.robotposition.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -11,12 +11,11 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ValidatorForFacingDirection.class)
+@Constraint(validatedBy = ValidatorForXPos.class)
 @Documented
-public @interface ValidFacingDirection {
+public @interface ValidXPos{
 
-    String message() default "Invalid Facing Direction of the robot - must be one of values N, S, E, W - " +
-            "representing North, South, East and West respectively";
+    String message() default "Invalid X Position of the robot - Must be between 0 and 4";
 
     Class<?>[] groups() default { };
 

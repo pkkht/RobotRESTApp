@@ -1,4 +1,4 @@
-package com.codingchallenge.model;
+package com.robotposition.model;
 
 import java.util.HashMap;
 import java.util.Map;

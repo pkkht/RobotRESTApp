@@ -1,6 +1,6 @@
-package com.codingchallenge.validation;
+package com.robotposition.validation;
 
-import com.codingchallenge.model.RobotPositionEnum;
+import com.robotposition.model.RobotPositionEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

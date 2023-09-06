@@ -1,11 +1,13 @@
-package com.codingchallenge.model;
+package com.robotposition.model;
 
-import com.codingchallenge.validation.ValidCommand;
+import com.robotposition.validation.ValidCommand;
+import jakarta.validation.Valid;
 import lombok.Data;
 
 @Data
 public class RobotPositionCommands {
 
+    @Valid
     private Long robotPositionId;
 
     @ValidCommand

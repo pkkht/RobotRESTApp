@@ -1,6 +1,6 @@
-package com.codingchallenge.repository;
+package com.robotposition.repository;
 
-import com.codingchallenge.model.RobotPosition;
+import com.robotposition.model.RobotPosition;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,17 +1,22 @@
-package com.codingchallenge.helper;
+package com.robotposition.helper;
 
-import com.codingchallenge.model.RobotPosition;
-import com.codingchallenge.model.RobotPositionCommands;
+
+import com.robotposition.exception.IllegalMoveException;
+import com.robotposition.model.RobotPosition;
+import com.robotposition.model.RobotPositionCommands;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+
 import org.springframework.stereotype.Component;
-import static com.codingchallenge.model.RobotPositionEnum.WEST;
-import static com.codingchallenge.model.RobotPositionEnum.EAST;
-import static com.codingchallenge.model.RobotPositionEnum.NORTH;
-import static com.codingchallenge.model.RobotPositionEnum.SOUTH;
-import static com.codingchallenge.model.RobotPositionEnum.MAX_X;
-import static com.codingchallenge.model.RobotPositionEnum.MAX_Y;
-import static com.codingchallenge.model.RobotPositionEnum.MIN_X;
-import static com.codingchallenge.model.RobotPositionEnum.MIN_Y;
-import static com.codingchallenge.model.RobotPositionCommandEnum.TURN_RIGHT;
+import static com.robotposition.model.RobotPositionEnum.WEST;
+import static com.robotposition.model.RobotPositionEnum.EAST;
+import static com.robotposition.model.RobotPositionEnum.NORTH;
+import static com.robotposition.model.RobotPositionEnum.SOUTH;
+import static com.robotposition.model.RobotPositionEnum.MAX_X;
+import static com.robotposition.model.RobotPositionEnum.MAX_Y;
+import static com.robotposition.model.RobotPositionEnum.MIN_X;
+import static com.robotposition.model.RobotPositionEnum.MIN_Y;
+import static com.robotposition.model.RobotPositionCommandEnum.TURN_RIGHT;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,9 +34,11 @@ public class RobotCommandsHelper {
     Predicate<String> rightTurnPredicate = c -> c.equals(TURN_RIGHT.getCommand());
     BiConsumer<RobotPosition, String> biConsumer = (c,d) -> c.setFacingdir(d);
 
+    @Autowired
+    private MessageSource messageSource;
 
     public RobotPosition updateRobotPositionBasedOnCommands(RobotPosition currentRobotPosition,
-                                                            RobotPositionCommands robotPositionCommands) throws Exception{
+                                                            RobotPositionCommands robotPositionCommands){
 
 
         List<String> commands = Arrays.asList(robotPositionCommands.getRobotPositionCommands().split(" "));
@@ -71,7 +78,7 @@ public class RobotCommandsHelper {
        }
     }
 
-    private void handleMove(RobotPosition currentRobotPosition) throws Exception {
+    private void handleMove(RobotPosition currentRobotPosition) {
 
         if (westPredicate.test(currentRobotPosition)){
             handleWestMove(currentRobotPosition);
@@ -84,35 +91,35 @@ public class RobotCommandsHelper {
         }
 
     }
-    private void handleNorthMove(RobotPosition currentRobotPosition) throws Exception {
+    private void handleNorthMove(RobotPosition currentRobotPosition) {
         if (currentRobotPosition.getYpos() == MAX_Y.getValue()){
-            throw new Exception("Illegal move in the north direction. The robot cannot fall off the table.");
+            throw new IllegalMoveException("north");
         }
         else {
             currentRobotPosition.setYpos(currentRobotPosition.getYpos()+1);
         }
     }
 
-    private void handleSouthMove(RobotPosition currentRobotPosition) throws Exception {
+    private void handleSouthMove(RobotPosition currentRobotPosition)  {
         if (currentRobotPosition.getYpos() == MIN_Y.getValue()){
-            throw new Exception("Illegal move in the south direction. The robot cannot fall off the table.");
+            throw new IllegalMoveException("south");
         }
         else {
             currentRobotPosition.setXpos(currentRobotPosition.getYpos()-1);
         }
     }
-    private void handleEastMove(RobotPosition currentRobotPosition) throws Exception {
+    private void handleEastMove(RobotPosition currentRobotPosition)  {
         if (currentRobotPosition.getXpos() == MAX_X.getValue()){
-            throw new Exception("Illegal move in the east direction. The robot cannot fall off the table.");
+            throw new IllegalMoveException("east");
         }
         else {
             currentRobotPosition.setXpos(currentRobotPosition.getXpos()+1);
         }
     }
 
-    private void handleWestMove(RobotPosition currentRobotPosition) throws Exception {
+    private void handleWestMove(RobotPosition currentRobotPosition) {
         if (currentRobotPosition.getXpos() == MIN_X.getValue()){
-            throw new Exception("Illegal move in the west direction. The robot cannot fall off the table.");
+            throw new IllegalMoveException("west");
         }
         else {
             currentRobotPosition.setXpos(currentRobotPosition.getXpos()-1);

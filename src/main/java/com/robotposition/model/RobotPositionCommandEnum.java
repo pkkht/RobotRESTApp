@@ -1,6 +1,5 @@
-package com.codingchallenge.model;
+package com.robotposition.model;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;

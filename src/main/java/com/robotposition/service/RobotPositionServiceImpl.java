@@ -1,12 +1,13 @@
-package com.codingchallenge.service;
+package com.robotposition.service;
 
-import com.codingchallenge.helper.RobotCommandsHelper;
-import com.codingchallenge.model.RobotPosition;
-import com.codingchallenge.model.RobotPositionCommands;
-import com.codingchallenge.repository.RobotPositionRepository;
+import com.robotposition.helper.RobotCommandsHelper;
+import com.robotposition.model.RobotPosition;
+import com.robotposition.model.RobotPositionCommands;
+import com.robotposition.repository.RobotPositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,9 +25,10 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
      * @return
      */
     @Override
-    public RobotPosition createRobotPosition(RobotPosition robotPosition) {
-        RobotPosition newRobotPosition = robotPositionRepository.save(robotPosition);
-        if(newRobotPosition.getId() > 0){
+    public RobotPosition createRobotPosition(RobotPosition robotPosition)  {
+        RobotPosition newRobotPosition;
+        newRobotPosition = robotPositionRepository.save(robotPosition);
+        if (newRobotPosition.getRobotPositionId() > 0) {
             return newRobotPosition;
         }
         return newRobotPosition;
@@ -42,7 +44,7 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
      * @return
      */
     @Override
-    public RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception {
+    public RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception  {
 
         if (robotPositionRepository.existsById(robotPositionCommands.getRobotPositionId())){
             Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPositionCommands.getRobotPositionId());
@@ -59,5 +61,10 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     @Override
     public void deleteRobotPositionById(Long id) {
         robotPositionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RobotPosition> findAllRobotPositions() {
+        return robotPositionRepository.findAll();
     }
 }

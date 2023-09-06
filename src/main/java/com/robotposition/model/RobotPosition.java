@@ -1,19 +1,20 @@
-package com.codingchallenge.model;
+package com.robotposition.model;
 
-import com.codingchallenge.validation.ValidFacingDirection;
-import com.codingchallenge.validation.ValidXPos;
-import com.codingchallenge.validation.ValidYPos;
+import com.robotposition.validation.ValidFacingDirection;
+import com.robotposition.validation.ValidXPos;
+import com.robotposition.validation.ValidYPos;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "robot_position")
+@Table(name = "robot_position", uniqueConstraints = {
+@UniqueConstraint(name="UniqueRobotPosition", columnNames = {"Xpos","Ypos"})})
 @Data
 public class RobotPosition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long robotPositionId;
 
     @Column(name="Xpos", nullable = false)
     @ValidXPos
