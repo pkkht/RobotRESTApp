@@ -1,22 +1,40 @@
 package com.robotposition.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+
 import java.time.LocalDateTime;
 
-
-@Data
-@AllArgsConstructor
-@Builder
 public class ExceptionResponse {
 
-    @Builder.Default
-    LocalDateTime timestamp = LocalDateTime.now();
+    LocalDateTime errorHappenedAt;
+    String errorMessage;
+    String errorResolution;
 
-    @Builder.Default
-    String errorMessage = "Something wrong happened";
+    public ExceptionResponse(LocalDateTime errorHappenedAt, String errorMessage, String errorResolution){
+        this.errorHappenedAt = errorHappenedAt;
+        this.errorMessage = errorMessage;
+        this.errorResolution = errorResolution;
+    }
 
-    @Builder.Default
-    String errorResolution = "Please contact the IT support team";
+    public LocalDateTime getErrorHappenedAt() {
+        return errorHappenedAt;
+    }
+
+    public void setErrorHappenedAt(LocalDateTime errorHappenedAt) {
+        this.errorHappenedAt = errorHappenedAt;
+    }
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String getErrorResolution() {
+        return errorResolution;
+    }
+
+    public void setErrorResolution(String errorResolution) {
+        this.errorResolution = errorResolution;
+    }
 }

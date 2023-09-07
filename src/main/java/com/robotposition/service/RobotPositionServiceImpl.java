@@ -1,10 +1,12 @@
 package com.robotposition.service;
 
+import com.robotposition.exception.DuplicateRobotPositionException;
 import com.robotposition.helper.RobotCommandsHelper;
 import com.robotposition.model.RobotPosition;
 import com.robotposition.model.RobotPositionCommands;
 import com.robotposition.repository.RobotPositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,16 +29,24 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     @Override
     public RobotPosition createRobotPosition(RobotPosition robotPosition)  {
         RobotPosition newRobotPosition;
-        newRobotPosition = robotPositionRepository.save(robotPosition);
-        if (newRobotPosition.getRobotPositionId() > 0) {
-            return newRobotPosition;
+        try {
+            newRobotPosition = robotPositionRepository.save(robotPosition);
+            if (newRobotPosition.getRobotPositionId() > 0) {
+                return newRobotPosition;
+            }
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DuplicateRobotPositionException(e);
+        }
+        catch(Exception e){
+            throw e;
         }
         return newRobotPosition;
     }
 
     @Override
     public Optional<RobotPosition> findRobotPositionById(Integer id) {
-        return robotPositionRepository.findById(id);
+            return robotPositionRepository.findById(id);
     }
 
     /**
@@ -59,7 +69,7 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     }
 
     @Override
-    public void deleteRobotPositionById(Integer id) {
+    public void deleteRobotPositionById(Integer id) throws Exception {
         robotPositionRepository.deleteById(id);
     }
 

@@ -4,7 +4,6 @@ import com.robotposition.validation.ValidFacingDirection;
 import com.robotposition.validation.ValidXPos;
 import com.robotposition.validation.ValidYPos;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 
 @Entity

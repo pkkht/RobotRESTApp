@@ -8,13 +8,13 @@ import java.util.Optional;
 
 public interface IRobotPositionService {
 
-      RobotPosition createRobotPosition(RobotPosition robotPosition);
+      RobotPosition createRobotPosition(RobotPosition robotPosition) throws Exception;
 
-      Optional<RobotPosition> findRobotPositionById(Integer id);
+      Optional<RobotPosition> findRobotPositionById(Integer id) throws Exception;
 
       RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception;
 
-      void deleteRobotPositionById(Integer id);
+      void deleteRobotPositionById(Integer id) throws Exception;
 
       List<RobotPosition> findAllRobotPositions();
 }

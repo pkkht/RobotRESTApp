@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ValidCommand{
 
-    String message() default "Invalid Command(s) - must be one of MOVE, LEFT or RIGHT separated by a space";
+    String message() default "Invalid Command(s) - must be one of MOVE, LEFT or RIGHT separated by a space. You can have one or more commands of these to control the robot position.";
 
     Class<?>[] groups() default { };
 
