@@ -22,6 +22,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+
+/**
+ * @author Hari
+ * Exception handler for custom exceptions and other possible exceptions
+ */
 @RestControllerAdvice
 @Component
 public class ExceptionResponseHandler extends ResponseEntityExceptionHandler {

@@ -6,6 +6,9 @@ import com.robotposition.validation.ValidYPos;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * @author Hari
+ */
 @Entity
 @Table(name = "robot_position", uniqueConstraints = {
 @UniqueConstraint(name="UniqueRobotPosition", columnNames = {"Xpos","Ypos"})})

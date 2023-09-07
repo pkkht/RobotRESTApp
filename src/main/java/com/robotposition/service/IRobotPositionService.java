@@ -6,6 +6,9 @@ import com.robotposition.model.RobotPositionCommands;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Hari
+ */
 public interface IRobotPositionService {
 
       RobotPosition createRobotPosition(RobotPosition robotPosition) throws Exception;

@@ -23,6 +23,12 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
+
+/**
+ * @author Hari
+ * Helper class methods to handle the robot movement commands: MOVE, RIGHT and LEFT.
+ * The logic is invoked when updating the robot position (PUT)
+ */
 @Component
 public class RobotCommandsHelper {
 
@@ -54,7 +60,7 @@ public class RobotCommandsHelper {
     }
 
     private void handleTurn(RobotPosition currentRobotPosition, String command) {
-
+        /*Change the direction of the robot when turning right. One turn is 90deg. Calculate the new direction accordingly.*/
        if(rightTurnPredicate.test(command)) {
            if (westPredicate.test(currentRobotPosition))
                biConsumer.accept(currentRobotPosition, NORTH.getDirection());
@@ -65,7 +71,7 @@ public class RobotCommandsHelper {
            } else if (southPredicate.test(currentRobotPosition)) {
                biConsumer.accept(currentRobotPosition, WEST.getDirection());
            }
-       } else {/* This else is for LEFT command. If not RIGHT, must be LEFT*/
+       } else {/* This else is for LEFT command. If not RIGHT, must be LEFT. One turn is 90deg. Calculate the new direction accordingly.*/
            if (westPredicate.test(currentRobotPosition))
                biConsumer.accept(currentRobotPosition, SOUTH.getDirection());
            else if (eastPredicate.test(currentRobotPosition)) {
@@ -92,36 +98,44 @@ public class RobotCommandsHelper {
 
     }
     private void handleNorthMove(RobotPosition currentRobotPosition) {
+        /*The north-facing robot cannot fall off the table when attempted to move*/
         if (currentRobotPosition.getYpos() == MAX_Y.getValue()){
             throw new IllegalMoveException("north");
         }
         else {
+            /*The north-facing robot moves y+1*/
             currentRobotPosition.setYpos(currentRobotPosition.getYpos()+1);
         }
     }
 
     private void handleSouthMove(RobotPosition currentRobotPosition)  {
+        /*The south-facing robot cannot fall off the table when attempted to move*/
         if (currentRobotPosition.getYpos() == MIN_Y.getValue()){
             throw new IllegalMoveException("south");
         }
         else {
+            /*The south-facing robot moves y-1*/
             currentRobotPosition.setXpos(currentRobotPosition.getYpos()-1);
         }
     }
     private void handleEastMove(RobotPosition currentRobotPosition)  {
+        /*The east-facing robot cannot fall off the table when attempted to move*/
         if (currentRobotPosition.getXpos() == MAX_X.getValue()){
             throw new IllegalMoveException("east");
         }
         else {
+            /*The east-facing robot moves x+1*/
             currentRobotPosition.setXpos(currentRobotPosition.getXpos()+1);
         }
     }
 
     private void handleWestMove(RobotPosition currentRobotPosition) {
+        /*The west-facing robot cannot fall off the table when attempted to move*/
         if (currentRobotPosition.getXpos() == MIN_X.getValue()){
             throw new IllegalMoveException("west");
         }
         else {
+            /*The west-facing robot moves x+1*/
             currentRobotPosition.setXpos(currentRobotPosition.getXpos()-1);
         }
     }

@@ -7,15 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * @author Hari
+ * Custom validator for Robot position commands issued through REST PUT API
+ */
 public class ValidatorForCommand implements ConstraintValidator<ValidCommand, String> {
 
-
-    /**
-     * @param commands
-     * @param constraintValidatorContext
-     * @return
-     */
     @Override
     public boolean isValid(String commands, ConstraintValidatorContext constraintValidatorContext) {
         if (Objects.nonNull(commands)) {

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Hari
+ * REST API endpoints implemented for supported HTTP methods
+ */
 @RestController
 @RequestMapping("/api/robotposition")
 public class RobotPositionRestController {
@@ -65,6 +69,6 @@ public class RobotPositionRestController {
             return ResponseEntity.notFound().build();
         }
         robotPositionService.deleteRobotPositionById(id);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -4,14 +4,12 @@ import com.robotposition.model.RobotPositionEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+/**
+ * @author Hari
+ * Custom validator for RobotPosition.FacingDirection field
+ */
 public class ValidatorForFacingDirection implements ConstraintValidator<ValidFacingDirection, String> {
 
-
-    /**
-     * @param facingDir
-     * @param constraintValidatorContext
-     * @return
-     */
     @Override
     public boolean isValid(String facingDir, ConstraintValidatorContext constraintValidatorContext) {
          return RobotPositionEnum.streamRobotPositionDirections().filter(dir -> dir.getDirection().equals(facingDir)).findAny().isPresent();

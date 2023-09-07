@@ -3,6 +3,10 @@ package com.robotposition.exception;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Hari
+ * Custom exception response for the ResponseEntity object
+ */
 public class ExceptionResponse {
 
     LocalDateTime errorHappenedAt;

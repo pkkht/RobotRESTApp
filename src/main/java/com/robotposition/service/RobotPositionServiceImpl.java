@@ -12,7 +12,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * @author Hari
+ * Service layer methods invoked by the controller layer.
+ * These service methods invoke the data layer (repository) to perform the CRUD operations.
+ */
 @Service
 public class RobotPositionServiceImpl implements IRobotPositionService{
 
@@ -56,14 +60,21 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     @Override
     public RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception  {
 
-        if (robotPositionRepository.existsById(robotPositionCommands.getRobotPositionId())){
-            Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPositionCommands.getRobotPositionId());
-            if (currentRobotPosition.isPresent()) {
-                RobotPosition updatedRobotPosition = robotCommandsHelper.
-                        updateRobotPositionBasedOnCommands(currentRobotPosition.get(), robotPositionCommands);
-                updatedRobotPosition = robotPositionRepository.save(updatedRobotPosition);
-                return updatedRobotPosition;
+        try {
+            if (robotPositionRepository.existsById(robotPositionCommands.getRobotPositionId())) {
+                Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPositionCommands.getRobotPositionId());
+                if (currentRobotPosition.isPresent()) {
+                    RobotPosition updatedRobotPosition = robotCommandsHelper.
+                            updateRobotPositionBasedOnCommands(currentRobotPosition.get(), robotPositionCommands);
+                    updatedRobotPosition = robotPositionRepository.save(updatedRobotPosition);
+                    return updatedRobotPosition;
+                }
             }
+        }  catch (DataIntegrityViolationException e){
+            throw new DuplicateRobotPositionException(e);
+        }
+        catch(Exception e){
+            throw e;
         }
         return new RobotPosition();
     }

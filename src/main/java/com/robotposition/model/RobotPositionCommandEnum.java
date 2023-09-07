@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+/**
+ * @author Hari
+ */
 public enum RobotPositionCommandEnum {
 
     MOVE_ONE_UNIT("MOVE"),

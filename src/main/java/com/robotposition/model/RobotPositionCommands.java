@@ -5,6 +5,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import lombok.Data;
 
+/**
+ * @author Hari
+ */
 @Data
 public class RobotPositionCommands {
 

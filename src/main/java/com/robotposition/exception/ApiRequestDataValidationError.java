@@ -2,6 +2,11 @@ package com.robotposition.exception;
 
 import java.util.List;
 
+/**
+ * @author Hari
+ *
+ * POJO for validation errors
+ */
 public class ApiRequestDataValidationError {
 
     String errorMessage;
