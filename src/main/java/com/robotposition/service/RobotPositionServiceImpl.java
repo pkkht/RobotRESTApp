@@ -54,18 +54,18 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     }
 
     /**
-     * @param robotPositionCommands
+     * @param robotPosition
      * @return
      */
     @Override
-    public RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception  {
+    public RobotPosition updateRobotPosition(RobotPosition robotPosition) throws Exception  {
 
         try {
-            if (robotPositionRepository.existsById(robotPositionCommands.getRobotPositionId())) {
-                Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPositionCommands.getRobotPositionId());
+            if (robotPositionRepository.existsById(robotPosition.getRobotPositionId())) {
+                Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPosition.getRobotPositionId());
                 if (currentRobotPosition.isPresent()) {
                     RobotPosition updatedRobotPosition = robotCommandsHelper.
-                            updateRobotPositionBasedOnCommands(currentRobotPosition.get(), robotPositionCommands);
+                            updateRobotPositionBasedOnCommands(currentRobotPosition.get(), robotPosition.getRobotPositionCommands());
                     updatedRobotPosition = robotPositionRepository.save(updatedRobotPosition);
                     return updatedRobotPosition;
                 }

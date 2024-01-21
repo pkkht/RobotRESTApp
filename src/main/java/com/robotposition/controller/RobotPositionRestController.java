@@ -55,11 +55,11 @@ public class RobotPositionRestController {
     }
 
     @PutMapping("/updateRobotPosition")
-    public ResponseEntity<Object> updateRobotPosition(@Valid @RequestBody @NotNull RobotPositionCommands robotPositionCommands) throws Exception{
-        if (!robotPositionService.findRobotPositionById(robotPositionCommands.getRobotPositionId()).isPresent()) {
+    public ResponseEntity<Object> updateRobotPosition(@RequestBody RobotPosition robotPosition) throws Exception{
+        if (!robotPositionService.findRobotPositionById(robotPosition.getRobotPositionId()).isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        RobotPosition updatedRobotPosition = robotPositionService.updateRobotPosition(robotPositionCommands);
+        RobotPosition updatedRobotPosition = robotPositionService.updateRobotPosition(robotPosition);
         return new ResponseEntity<>(updatedRobotPosition, HttpStatus.OK);
     }
 

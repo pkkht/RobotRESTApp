@@ -44,10 +44,10 @@ public class RobotCommandsHelper {
     private MessageSource messageSource;
 
     public RobotPosition updateRobotPositionBasedOnCommands(RobotPosition currentRobotPosition,
-                                                            RobotPositionCommands robotPositionCommands){
+                                                            String robotPositionCommands){
 
 
-        List<String> commands = Arrays.asList(robotPositionCommands.getRobotPositionCommands().split(" "));
+        List<String> commands = Arrays.asList(robotPositionCommands.split(" "));
 
         for (String command: commands){
             switch(command){

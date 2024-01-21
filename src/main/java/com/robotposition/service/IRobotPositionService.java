@@ -15,7 +15,7 @@ public interface IRobotPositionService {
 
       Optional<RobotPosition> findRobotPositionById(Integer id) throws Exception;
 
-      RobotPosition updateRobotPosition(RobotPositionCommands robotPositionCommands) throws Exception;
+      RobotPosition updateRobotPosition(RobotPosition robotPosition) throws Exception;
 
       void deleteRobotPositionById(Integer id) throws Exception;
 
