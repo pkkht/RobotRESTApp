@@ -6,6 +6,7 @@ import com.robotposition.service.IRobotPositionService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -71,4 +72,21 @@ public class RobotPositionRestController {
         robotPositionService.deleteRobotPositionById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    //Implement pagination with sorting
+    @GetMapping("/pagination/{offset}/{pageSize}")
+    public ResponseEntity<Page<RobotPosition>> pagination(
+            @PathVariable int offset,
+            @PathVariable int pageSize,
+            @RequestParam(required = false, defaultValue = "defaultValue") String field) {
+        Page<RobotPosition> robotPositions= robotPositionService.pagination(offset, pageSize, field);
+
+        if (robotPositions.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(robotPositions);
+        }
+    }
+
+
 }

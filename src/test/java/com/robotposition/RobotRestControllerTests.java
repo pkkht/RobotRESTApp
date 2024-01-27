@@ -9,17 +9,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -171,5 +175,34 @@ public class RobotRestControllerTests {
 		// then
 		response.andExpect(status().isOk())
 				.andDo(print());
+	}
+
+	@Test
+	void givenOffsetPageSizeAndOptionalFieldWhenSearchedIsFoundThenReturnRobotPositionList() throws Exception {
+		// Mock data
+		RobotPosition robotPosition = new RobotPosition();
+		robotPosition.setRobotPositionId(1);
+		robotPosition.setFacingdir(RobotPositionEnum.NORTH.getDirection());
+		robotPosition.setXpos(0);
+		robotPosition.setYpos(0);
+
+		// Mock the service method
+		Page<RobotPosition> mockPage = new PageImpl<>(Collections.singletonList(robotPosition));
+		when(robotPositionService.pagination(anyInt(), anyInt(), anyString())).thenReturn(mockPage);
+
+		// Perform the request and assert the response
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/robotposition/pagination/{offset}/{pageSize}", 0, 10)
+						.param("field", "mockField") // Add query parameter
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.content[0].robotPositionId", is(robotPosition.getRobotPositionId())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.content[0].facingdir", is(robotPosition.getFacingdir())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.content[0].xpos", is(robotPosition.getXpos())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.content[0].ypos", is(robotPosition.getYpos())))
+				// Add additional assertions based on your controller's behavior
+				.andReturn();
+
+		// Verify that the service method was called with the correct parameters
+		verify(robotPositionService, times(1)).pagination(eq(0), eq(10), eq("mockField"));
 	}
 }

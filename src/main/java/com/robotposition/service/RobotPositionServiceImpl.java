@@ -7,6 +7,9 @@ import com.robotposition.model.RobotPositionCommands;
 import com.robotposition.repository.RobotPositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -87,5 +90,19 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     @Override
     public List<RobotPosition> findAllRobotPositions() {
         return robotPositionRepository.findAll();
+    }
+
+
+    @Override
+    public Page<RobotPosition> pagination(int offset, int pageSize, String field) {
+
+        if ("defaultValue".equals(field)){
+            return robotPositionRepository.findAll(
+                    PageRequest.of(offset, pageSize)
+            );
+        }
+        return robotPositionRepository.findAll(
+                PageRequest.of(offset, pageSize).withSort(Sort.by(field))
+        );
     }
 }
