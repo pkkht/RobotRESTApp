@@ -2,6 +2,7 @@ package com.robotposition.service;
 
 import com.robotposition.model.RobotPosition;
 import com.robotposition.model.RobotPositionCommands;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +21,6 @@ public interface IRobotPositionService {
       void deleteRobotPositionById(Integer id) throws Exception;
 
       List<RobotPosition> findAllRobotPositions();
+
+      Page<RobotPosition> pagination(int offset, int pageSize, String field);
 }
