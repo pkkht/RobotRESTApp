@@ -3,9 +3,7 @@ package com.robotposition.service;
 import com.robotposition.exception.DuplicateRobotPositionException;
 import com.robotposition.helper.RobotCommandsHelper;
 import com.robotposition.model.RobotPosition;
-import com.robotposition.model.RobotPositionCommands;
 import com.robotposition.repository.RobotPositionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,39 +19,38 @@ import java.util.Optional;
  * These service methods invoke the data layer (repository) to perform the CRUD operations.
  */
 @Service
-public class RobotPositionServiceImpl implements IRobotPositionService{
+public class RobotPositionServiceImpl implements IRobotPositionService {
 
-    @Autowired
-    RobotPositionRepository robotPositionRepository;
+    private final RobotPositionRepository robotPositionRepository;
 
-    @Autowired
-    RobotCommandsHelper robotCommandsHelper;
+    private final RobotCommandsHelper robotCommandsHelper;
+
+    public RobotPositionServiceImpl(RobotPositionRepository robotPositionRepository, RobotCommandsHelper robotCommandsHelper) {
+        this.robotPositionRepository = robotPositionRepository;
+        this.robotCommandsHelper = robotCommandsHelper;
+    }
 
     /**
      * @param robotPosition
      * @return
      */
     @Override
-    public RobotPosition createRobotPosition(RobotPosition robotPosition)  {
+    public RobotPosition createRobotPosition(final RobotPosition robotPosition) {
         RobotPosition newRobotPosition;
         try {
             newRobotPosition = robotPositionRepository.save(robotPosition);
             if (newRobotPosition.getRobotPositionId() > 0) {
                 return newRobotPosition;
             }
-        }
-        catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DuplicateRobotPositionException(e);
-        }
-        catch(Exception e){
-            throw e;
         }
         return newRobotPosition;
     }
 
     @Override
-    public Optional<RobotPosition> findRobotPositionById(Integer id) {
-            return robotPositionRepository.findById(id);
+    public Optional<RobotPosition> findRobotPositionById(final Integer id) {
+        return robotPositionRepository.findById(id);
     }
 
     /**
@@ -61,29 +58,25 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
      * @return
      */
     @Override
-    public RobotPosition updateRobotPosition(RobotPosition robotPosition) throws Exception  {
+    public RobotPosition updateRobotPosition(final RobotPosition robotPosition) {
 
         try {
-            if (robotPositionRepository.existsById(robotPosition.getRobotPositionId())) {
-                Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPosition.getRobotPositionId());
-                if (currentRobotPosition.isPresent()) {
-                    RobotPosition updatedRobotPosition = robotCommandsHelper.
-                            updateRobotPositionBasedOnCommands(currentRobotPosition.get(), robotPosition.getRobotPositionCommands());
-                    updatedRobotPosition = robotPositionRepository.save(updatedRobotPosition);
-                    return updatedRobotPosition;
-                }
+            Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPosition.getRobotPositionId());
+            if (currentRobotPosition.isPresent()) {
+                RobotPosition updatedRobotPosition = robotCommandsHelper.
+                        updateRobotPositionBasedOnCommands(currentRobotPosition.get(), robotPosition.getRobotPositionCommands());
+                updatedRobotPosition = robotPositionRepository.save(updatedRobotPosition);
+                return updatedRobotPosition;
             }
-        }  catch (DataIntegrityViolationException e){
+
+        } catch (DataIntegrityViolationException e) {
             throw new DuplicateRobotPositionException(e);
-        }
-        catch(Exception e){
-            throw e;
         }
         return new RobotPosition();
     }
 
     @Override
-    public void deleteRobotPositionById(Integer id) throws Exception {
+    public void deleteRobotPositionById(final Integer id) {
         robotPositionRepository.deleteById(id);
     }
 
@@ -96,7 +89,7 @@ public class RobotPositionServiceImpl implements IRobotPositionService{
     @Override
     public Page<RobotPosition> pagination(int offset, int pageSize, String field) {
 
-        if ("defaultValue".equals(field)){
+        if ("defaultValue".equals(field)) {
             return robotPositionRepository.findAll(
                     PageRequest.of(offset, pageSize)
             );

@@ -38,7 +38,7 @@ public class RobotCommandsHelper {
     Predicate<RobotPosition> southPredicate = (c)-> c.getFacingdir().equals(SOUTH.getDirection());
 
     Predicate<String> rightTurnPredicate = c -> c.equals(TURN_RIGHT.getCommand());
-    BiConsumer<RobotPosition, String> biConsumer = (c,d) -> c.setFacingdir(d);
+    BiConsumer<RobotPosition, String> biConsumer = RobotPosition::setFacingdir;
 
     @Autowired
     private MessageSource messageSource;
@@ -47,7 +47,7 @@ public class RobotCommandsHelper {
                                                             String robotPositionCommands){
 
 
-        List<String> commands = Arrays.asList(robotPositionCommands.split(" "));
+        String[] commands = robotPositionCommands.split(" ");
 
         for (String command: commands){
             switch(command){
