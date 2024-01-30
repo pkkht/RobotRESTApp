@@ -1,5 +1,6 @@
 package com.robotposition.controller;
 
+import com.robotposition.data.payload.request.UpdateRobotPositionRequest;
 import com.robotposition.model.RobotPosition;
 import com.robotposition.service.IRobotPositionService;
 import jakarta.validation.Valid;
@@ -21,7 +22,7 @@ import java.util.Optional;
 public class RobotPositionRestController {
     private final IRobotPositionService robotPositionService;
 
-    public RobotPositionRestController(IRobotPositionService robotPositionService) {
+    public RobotPositionRestController(final IRobotPositionService robotPositionService) {
         this.robotPositionService = robotPositionService;
     }
 
@@ -44,12 +45,9 @@ public class RobotPositionRestController {
     }
 
     @PutMapping("/updateRobotPosition")
-    public ResponseEntity<Object> updateRobotPosition(@RequestBody final RobotPosition robotPosition) throws Exception {
-        if (robotPositionService.findRobotPositionById(robotPosition.getRobotPositionId()).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        RobotPosition updatedRobotPosition = robotPositionService.updateRobotPosition(robotPosition);
-        return new ResponseEntity<>(updatedRobotPosition, HttpStatus.OK);
+    public ResponseEntity<Object> updateRobotPosition(@RequestBody @Valid final UpdateRobotPositionRequest request) throws Exception {
+       final RobotPosition updatedRobotPosition = robotPositionService.updateRobotPosition(request);
+       return updatedRobotPosition.getRobotPositionId() != 0 ? ResponseEntity.ok(updatedRobotPosition) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
@@ -57,6 +55,7 @@ public class RobotPositionRestController {
         if (robotPositionService.findRobotPositionById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         robotPositionService.deleteRobotPositionById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

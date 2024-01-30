@@ -1,5 +1,6 @@
 package com.robotposition.service;
 
+import com.robotposition.data.payload.request.UpdateRobotPositionRequest;
 import com.robotposition.exception.DuplicateRobotPositionException;
 import com.robotposition.helper.RobotCommandsHelper;
 import com.robotposition.model.RobotPosition;
@@ -25,14 +26,14 @@ public class RobotPositionServiceImpl implements IRobotPositionService {
 
     private final RobotCommandsHelper robotCommandsHelper;
 
-    public RobotPositionServiceImpl(RobotPositionRepository robotPositionRepository, RobotCommandsHelper robotCommandsHelper) {
+    public RobotPositionServiceImpl(final RobotPositionRepository robotPositionRepository, final RobotCommandsHelper robotCommandsHelper) {
         this.robotPositionRepository = robotPositionRepository;
         this.robotCommandsHelper = robotCommandsHelper;
     }
 
     /**
-     * @param robotPosition
-     * @return
+     * @param robotPosition RobotPosition
+     * @return RobotPosition
      */
     @Override
     public RobotPosition createRobotPosition(final RobotPosition robotPosition) {
@@ -54,17 +55,16 @@ public class RobotPositionServiceImpl implements IRobotPositionService {
     }
 
     /**
-     * @param robotPosition
-     * @return
+     * @param request UpdateRobotPositionRequest
+     * @return RobotPosition
      */
     @Override
-    public RobotPosition updateRobotPosition(final RobotPosition robotPosition) {
+    public RobotPosition updateRobotPosition(final UpdateRobotPositionRequest request) {
 
         try {
-            Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(robotPosition.getRobotPositionId());
+            final Optional<RobotPosition> currentRobotPosition = robotPositionRepository.findById(request.getRobotPositionId());
             if (currentRobotPosition.isPresent()) {
-                RobotPosition updatedRobotPosition = robotCommandsHelper.
-                        updateRobotPositionBasedOnCommands(currentRobotPosition.get(), robotPosition.getRobotPositionCommands());
+                RobotPosition updatedRobotPosition = robotCommandsHelper.updateRobotPositionBasedOnCommands(currentRobotPosition.get(), request.getRobotPositionCommands());
                 updatedRobotPosition = robotPositionRepository.save(updatedRobotPosition);
                 return updatedRobotPosition;
             }
