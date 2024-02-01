@@ -1,5 +1,6 @@
 package com.robotposition.controller;
 
+import com.robotposition.data.payload.request.CreateRobotPositionRequest;
 import com.robotposition.data.payload.request.UpdateRobotPositionRequest;
 import com.robotposition.model.RobotPosition;
 import com.robotposition.service.IRobotPositionService;
@@ -27,8 +28,8 @@ public class RobotPositionRestController {
     }
 
     @PostMapping("/createRobotPosition")
-    public ResponseEntity<RobotPosition> createRobotPosition(@Valid @RequestBody @NotNull final RobotPosition robotPosition) throws Exception {
-        return new ResponseEntity<>( robotPositionService.createRobotPosition(robotPosition), HttpStatus.CREATED);
+    public ResponseEntity<RobotPosition> createRobotPosition(@Valid @RequestBody @NotNull final CreateRobotPositionRequest robotPositionRequest) throws Exception {
+        return new ResponseEntity<>( robotPositionService.createRobotPosition(robotPositionRequest), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

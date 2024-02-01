@@ -1,5 +1,6 @@
 package com.robotposition.service;
 
+import com.robotposition.data.payload.request.CreateRobotPositionRequest;
 import com.robotposition.data.payload.request.UpdateRobotPositionRequest;
 import com.robotposition.model.RobotPosition;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,7 @@ import java.util.Optional;
  */
 public interface IRobotPositionService {
 
-      RobotPosition createRobotPosition(RobotPosition robotPosition) throws Exception;
+      RobotPosition createRobotPosition(CreateRobotPositionRequest robotPositionRequest) throws Exception;
 
       Optional<RobotPosition> findRobotPositionById(Integer id) throws Exception;
 

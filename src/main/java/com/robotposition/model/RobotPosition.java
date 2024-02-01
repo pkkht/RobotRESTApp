@@ -11,7 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Hari
@@ -21,6 +24,9 @@ import lombok.Data;
 @UniqueConstraint(name="UniqueRobotPosition", columnNames = {"Xpos","Ypos"})})
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RobotPosition {
 
     @Id

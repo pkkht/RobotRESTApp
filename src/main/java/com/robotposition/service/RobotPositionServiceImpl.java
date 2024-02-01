@@ -1,5 +1,6 @@
 package com.robotposition.service;
 
+import com.robotposition.data.payload.request.CreateRobotPositionRequest;
 import com.robotposition.data.payload.request.UpdateRobotPositionRequest;
 import com.robotposition.exception.DuplicateRobotPositionException;
 import com.robotposition.helper.RobotCommandsHelper;
@@ -32,21 +33,22 @@ public class RobotPositionServiceImpl implements IRobotPositionService {
     }
 
     /**
-     * @param robotPosition RobotPosition
+     * @param robotPositionRequest CreateRobotPositionRequest
      * @return RobotPosition
      */
+
     @Override
-    public RobotPosition createRobotPosition(final RobotPosition robotPosition) {
-        RobotPosition newRobotPosition;
+    public RobotPosition createRobotPosition(final CreateRobotPositionRequest robotPositionRequest) {
         try {
-            newRobotPosition = robotPositionRepository.save(robotPosition);
-            if (newRobotPosition.getRobotPositionId() > 0) {
-                return newRobotPosition;
-            }
+            final RobotPosition robotPosition = RobotPosition.builder()
+                    .xpos(robotPositionRequest.getXpos())
+                    .ypos(robotPositionRequest.getYpos())
+                    .facingdir(robotPositionRequest.getFacingdir())
+                    .build();
+            return robotPositionRepository.save(robotPosition);
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateRobotPositionException(e);
         }
-        return newRobotPosition;
     }
 
     @Override
