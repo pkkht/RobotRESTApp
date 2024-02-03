@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "d607000f-54f9-4dc4-b8b8-db5fdd69014e",
+		"name": "RobotPosition API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateRobotPositionSuccess",
+			"id": "8f5085e9-cd1a-46ce-8f21-63bff9492da4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"xpos\" : 0,\n    \"ypos\" : 1,\n    \"facingdir\": \"N\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/robotposition/createRobotPosition"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRobotPositionSuccess Copy",
+			"id": "3017f7c0-62a6-43c3-aec7-a8bb47c67404",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"xpos\" : 0,\n    \"ypos\" : 1,\n    \"facingdir\": \"W\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/robotposition/createRobotPosition"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateRobotPosition",
+			"id": "32796ef9-10b7-4888-8745-6109c0752a87",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"robotPositionId\": 1,\n \"robotPositionCommands\" : \"RIGHT RIGHT MOVE LEFT\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/robotposition/updateRobotPosition"
+			},
+			"response": []
+		},
+		{
+			"name": "RobotPositionById",
+			"id": "59468f1e-2c90-4279-8566-ae05bbf2726d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/robotposition/3"
+			},
+			"response": []
+		},
+		{
+			"name": "ReportofAllRobotPositions",
+			"id": "6ae51fe4-667a-4090-9e37-404ae324eb19",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/robotposition/report"
+			},
+			"response": []
+		},
+		{
+			"name": "RobotPositionById",
+			"id": "ce074b22-2b20-4534-ab3c-aaaad6b4b7fd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/robotposition/1"
+			},
+			"response": []
+		},
+		{
+			"name": "pagination",
+			"id": "593bb83b-1890-43c1-ae27-f6b23948e70e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/robotposition/pagination/2/4?field=robotPositionId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"robotposition",
+						"pagination",
+						"2",
+						"4"
+					],
+					"query": [
+						{
+							"key": "field",
+							"value": "robotPositionId"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
