@@ -4,7 +4,6 @@ import com.robotposition.model.RobotPositionCommandEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +18,7 @@ public class ValidatorForCommand implements ConstraintValidator<ValidCommand, St
         if (Objects.nonNull(commands)) {
             List<String> eachCommand = Arrays.asList(commands.split(" "));
             List<String> robotCommands = RobotPositionCommandEnum.streamRobotCommands().toList();
-            return new HashSet<>(robotCommands).containsAll(eachCommand);
+            return robotCommands.containsAll(eachCommand);
         }
         return true;
     }

@@ -3,20 +3,25 @@ package com.robotposition.helper;
 
 import com.robotposition.exception.IllegalMoveException;
 import com.robotposition.model.RobotPosition;
+import com.robotposition.model.RobotPositionCommands;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+
 import org.springframework.stereotype.Component;
-
-import java.util.function.BiConsumer;
-import java.util.function.Predicate;
-
-import static com.robotposition.model.RobotPositionCommandEnum.TURN_RIGHT;
+import static com.robotposition.model.RobotPositionEnum.WEST;
 import static com.robotposition.model.RobotPositionEnum.EAST;
+import static com.robotposition.model.RobotPositionEnum.NORTH;
+import static com.robotposition.model.RobotPositionEnum.SOUTH;
 import static com.robotposition.model.RobotPositionEnum.MAX_X;
 import static com.robotposition.model.RobotPositionEnum.MAX_Y;
 import static com.robotposition.model.RobotPositionEnum.MIN_X;
 import static com.robotposition.model.RobotPositionEnum.MIN_Y;
-import static com.robotposition.model.RobotPositionEnum.NORTH;
-import static com.robotposition.model.RobotPositionEnum.SOUTH;
-import static com.robotposition.model.RobotPositionEnum.WEST;
+import static com.robotposition.model.RobotPositionCommandEnum.TURN_RIGHT;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 
 /**
@@ -33,25 +38,28 @@ public class RobotCommandsHelper {
     Predicate<RobotPosition> southPredicate = (c)-> c.getFacingdir().equals(SOUTH.getDirection());
 
     Predicate<String> rightTurnPredicate = c -> c.equals(TURN_RIGHT.getCommand());
-    BiConsumer<RobotPosition, String> biConsumer = RobotPosition::setFacingdir;
+    BiConsumer<RobotPosition, String> biConsumer = (c,d) -> c.setFacingdir(d);
 
-    public RobotPosition updateRobotPositionBasedOnCommands(final RobotPosition currentRobotPosition,
-                                                            final String robotPositionCommands){
+    @Autowired
+    private MessageSource messageSource;
 
-        if(robotPositionCommands != null) {
-            String[] commands = robotPositionCommands.split(" ");
+    public RobotPosition updateRobotPositionBasedOnCommands(RobotPosition currentRobotPosition,
+                                                            String robotPositionCommands){
 
-            for (String command : commands) {
-                switch (command) {
-                    case "MOVE" -> handleMove(currentRobotPosition);
-                    case "LEFT", "RIGHT" -> handleTurn(currentRobotPosition, command);
-                }
+
+        List<String> commands = Arrays.asList(robotPositionCommands.split(" "));
+
+        for (String command: commands){
+            switch(command){
+                case "MOVE" -> handleMove(currentRobotPosition);
+                case "LEFT", "RIGHT" -> handleTurn(currentRobotPosition, command);
             }
         }
+
         return currentRobotPosition;
     }
 
-    private void handleTurn(final RobotPosition currentRobotPosition, final String command) {
+    private void handleTurn(RobotPosition currentRobotPosition, String command) {
         /*Change the direction of the robot when turning right. One turn is 90deg. Calculate the new direction accordingly.*/
        if(rightTurnPredicate.test(command)) {
            if (westPredicate.test(currentRobotPosition))
@@ -76,7 +84,7 @@ public class RobotCommandsHelper {
        }
     }
 
-    private void handleMove(final RobotPosition currentRobotPosition) {
+    private void handleMove(RobotPosition currentRobotPosition) {
 
         if (westPredicate.test(currentRobotPosition)){
             handleWestMove(currentRobotPosition);
@@ -89,7 +97,7 @@ public class RobotCommandsHelper {
         }
 
     }
-    private void handleNorthMove(final RobotPosition currentRobotPosition) {
+    private void handleNorthMove(RobotPosition currentRobotPosition) {
         /*The north-facing robot cannot fall off the table when attempted to move*/
         if (currentRobotPosition.getYpos() == MAX_Y.getValue()){
             throw new IllegalMoveException("north");
@@ -100,7 +108,7 @@ public class RobotCommandsHelper {
         }
     }
 
-    private void handleSouthMove(final RobotPosition currentRobotPosition)  {
+    private void handleSouthMove(RobotPosition currentRobotPosition)  {
         /*The south-facing robot cannot fall off the table when attempted to move*/
         if (currentRobotPosition.getYpos() == MIN_Y.getValue()){
             throw new IllegalMoveException("south");
@@ -110,7 +118,7 @@ public class RobotCommandsHelper {
             currentRobotPosition.setXpos(currentRobotPosition.getYpos()-1);
         }
     }
-    private void handleEastMove(final RobotPosition currentRobotPosition)  {
+    private void handleEastMove(RobotPosition currentRobotPosition)  {
         /*The east-facing robot cannot fall off the table when attempted to move*/
         if (currentRobotPosition.getXpos() == MAX_X.getValue()){
             throw new IllegalMoveException("east");
@@ -121,7 +129,7 @@ public class RobotCommandsHelper {
         }
     }
 
-    private void handleWestMove(final RobotPosition currentRobotPosition) {
+    private void handleWestMove(RobotPosition currentRobotPosition) {
         /*The west-facing robot cannot fall off the table when attempted to move*/
         if (currentRobotPosition.getXpos() == MIN_X.getValue()){
             throw new IllegalMoveException("west");
