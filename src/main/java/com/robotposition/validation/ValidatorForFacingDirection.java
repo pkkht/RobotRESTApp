@@ -12,6 +12,6 @@ public class ValidatorForFacingDirection implements ConstraintValidator<ValidFac
 
     @Override
     public boolean isValid(String facingDir, ConstraintValidatorContext constraintValidatorContext) {
-         return RobotPositionEnum.streamRobotPositionDirections().anyMatch(dir -> dir.getDirection().equals(facingDir));
+         return RobotPositionEnum.streamRobotPositionDirections().filter(dir -> dir.getDirection().equals(facingDir)).findAny().isPresent();
     }
 }
