@@ -1,20 +1,14 @@
 package com.robotposition.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.robotposition.validation.ValidCommand;
 import com.robotposition.validation.ValidFacingDirection;
 import com.robotposition.validation.ValidXPos;
 import com.robotposition.validation.ValidYPos;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Transient;
 
 /**
  * @author Hari
@@ -24,9 +18,6 @@ import lombok.NoArgsConstructor;
 @UniqueConstraint(name="UniqueRobotPosition", columnNames = {"Xpos","Ypos"})})
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class RobotPosition {
 
     @Id
@@ -44,4 +35,10 @@ public class RobotPosition {
     @Column(name="facingdir", nullable = false)
     @ValidFacingDirection
     private String facingdir;
+
+    @ValidCommand
+    @Transient
+    @JsonIgnore
+    private String robotPositionCommands;
+
 }
