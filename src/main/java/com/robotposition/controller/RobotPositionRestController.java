@@ -55,6 +55,10 @@ public class RobotPositionRestController {
         }
     }
 
+    @PostMapping("/csrf-access-denied")
+    public ResponseEntity getCSRFError() {
+       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
     @PutMapping("/updateRobotPosition")
     public ResponseEntity<Object> updateRobotPosition(@RequestBody RobotPosition robotPosition) throws Exception{
         if (!robotPositionService.findRobotPositionById(robotPosition.getRobotPositionId()).isPresent()) {
