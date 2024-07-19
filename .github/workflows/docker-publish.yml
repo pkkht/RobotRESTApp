@@ -8,8 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-    with:
-      registry: ghcr.io
-    run:
-      docker build . --tag ghcr.io/pkkht/robotrestapp:latest
-      docker push ghcr.io/pkkht/robotrestapp:latest
+      - name: Build and publish Docker image
+        run: |
+          docker build . --tag ghcr.io/pkkht/robotrestapp:latest
+          docker push ghcr.io/pkkht/robotrestapp:latest
