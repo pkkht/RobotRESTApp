@@ -3,15 +3,6 @@ COPY pom.xml /build/
 COPY src /build/src/
 WORKDIR /build/
 RUN mvn package spring-boot:repackage
-#FROM openjdk:17-jdk-slim-buster
-#FROM busybox
-#RUN set -x && yum update && \
-    #
-    # install *.UTF-8 locales otherwise some apps get trouble
-    #
-    # install other utilities
-    #apt-get -y install \
-     #   sudo curl wget tar.
-COPY ./target/RobotRESTApp*.jar /RobotApp/robot-api.jar
-WORKDIR /RobotApp/
-ENTRYPOINT ["java", "-jar", "robot-api.jar"]
+#COPY ./target/RobotRESTApp*.jar /RobotApp/robot-api.jar
+#WORKDIR /RobotApp/
+ENTRYPOINT ["java", "-jar", "RobotRESTApp*.jar"]
