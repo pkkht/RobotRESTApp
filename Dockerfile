@@ -13,5 +13,5 @@ RUN mvn package spring-boot:repackage
     #apt-get -y install \
      #   sudo curl wget tar.
 WORKDIR /RobotApp/
-COPY target/RobotRESTApp*.jar /RobotApp/robot-api.jar
+COPY ./target/RobotRESTApp*.jar /RobotApp/robot-api.jar
 ENTRYPOINT ["java", "-jar", "robot-api.jar"]
