@@ -16,10 +16,10 @@ func TestValidDockerTestMavenProject(t *testing.T) {
 	}
 
 	// Build the Docker image.
-	docker.Build(t, "./", buildOptions)
+	docker.Build(t, "../", buildOptions)
 
-	//Test if app directory present
-	optsForAppDir := &docker.RunOptions{Command: []string{"ls", "/"}}
-	outputDorAppDir := docker.Run(t, tag, optsForAppDir)
-	assert.Contains(t, outputDorAppDir, "example_dir")
+	//Test if app jar present
+	optsForAppDir := &docker.RunOptions{Command: []string{"ls"}}
+	outputForAppDir := docker.Run(t, tag, optsForAppDir)
+	assert.Contains(t, outputForAppDir, "RobotRESTApp")
 }
