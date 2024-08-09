@@ -19,5 +19,5 @@ jobs:
           password: ${{secrets.GITHUB_TOKEN}}
       - name: Build and publish Docker image
         run: |
-          docker build . --tag ghcr.io/pkkht/robotrestapp:latest
+          docker build --progress=plain . --tag ghcr.io/pkkht/robotrestapp:latest
           docker push ghcr.io/pkkht/robotrestapp:latest
