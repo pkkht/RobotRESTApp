@@ -1,8 +1,9 @@
-FROM maven:3.8.4-openjdk-17 AS MAVEN_BUILD
-COPY pom.xml /build/
-COPY src /build/src/
-WORKDIR /build/
-RUN mvn package spring-boot:repackage
-#COPY ./target/RobotRESTApp*.jar /RobotApp/robot-api.jar
-#WORKDIR /RobotApp/
-ENTRYPOINT ["java", "-jar", "RobotRESTApp*.jar"]
+FROM maven:3.8.4-openjdk-17 AS maven-builder
+COPY pom.xml /app/
+COPY src /app/src/
+RUN mvn -f /app/pom.xml clean package -DskipTests
+
+#FROM openjdk:17-alpine
+ADD target/RobotRESTApp-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]

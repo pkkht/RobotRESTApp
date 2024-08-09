@@ -89,6 +89,21 @@
 					</execution>
 				</executions>
 			</plugin>
+			 <plugin>
+                <groupId>com.github.terratest-maven-plugin</groupId>
+                <artifactId>terratest-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <configuration>
+                    <terraTestPath>${project.basedir}/terratest</terraTestPath>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run-tests</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
